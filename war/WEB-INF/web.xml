@@ -1,18 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xmlns="http://java.sun.com/xml/ns/javaee"
-xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
-http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	version="2.5">
+
 	<servlet>
-		<servlet-name>MyBaztagServices</servlet-name>
-		<servlet-class>org.aggelos.baztag.MyBaztagServicesServlet</servlet-class>
+		<servlet-name>springapp</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<!-- init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>
+				/WEB-INF/spring/servlet-context.xml
+			</param-value>
+		</init-param -->
+		<load-on-startup>2</load-on-startup>
 	</servlet>
+
 	<servlet-mapping>
-		<servlet-name>MyBaztagServices</servlet-name>
-		<url-pattern>/mybaztagservices</url-pattern>
+		<servlet-name>springapp</servlet-name>
+		<url-pattern>/mvc/*</url-pattern>
 	</servlet-mapping>
-	<welcome-file-list>
-		<welcome-file>home.jsp</welcome-file>
-	</welcome-file-list>
+	
+	<servlet>
+		<servlet-name>test</servlet-name>
+		<servlet-class>org.aggelos.baztag.MyBaztagServicesServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>test</servlet-name>
+		<url-pattern>/test</url-pattern>
+	</servlet-mapping>
+	
 </web-app>
