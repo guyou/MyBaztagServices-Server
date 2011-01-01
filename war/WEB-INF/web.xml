@@ -19,18 +19,18 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 
 	<servlet-mapping>
 		<servlet-name>springapp</servlet-name>
-		<url-pattern>/mvc/*</url-pattern>
+		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 	
-	<servlet>
-		<servlet-name>test</servlet-name>
-		<servlet-class>org.aggelos.baztag.MyBaztagServicesServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	
-	<servlet-mapping>
-		<servlet-name>test</servlet-name>
-		<url-pattern>/test</url-pattern>
-	</servlet-mapping>
+<!--	<servlet>-->
+<!--		<servlet-name>test</servlet-name>-->
+<!--		<servlet-class>org.aggelos.baztag.MyBaztagServicesServlet</servlet-class>-->
+<!--		<load-on-startup>1</load-on-startup>-->
+<!--	</servlet>-->
+<!--	-->
+<!--	<servlet-mapping>-->
+<!--		<servlet-name>test</servlet-name>-->
+<!--		<url-pattern>/test</url-pattern>-->
+<!--	</servlet-mapping>-->
 	
 </web-app>

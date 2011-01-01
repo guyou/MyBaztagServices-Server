@@ -15,5 +15,10 @@
 	<context:component-scan base-package="org.aggelos.baztag.controller" />
 	<context:annotation-config />
 	<mvc:annotation-driven />
+	
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources/ directory -->
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+	
+	<!-- mvc:view-controller path="/" view-name="home"/-->
 
 </beans>
