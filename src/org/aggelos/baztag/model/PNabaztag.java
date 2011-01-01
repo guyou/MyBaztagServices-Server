@@ -8,6 +8,8 @@ import javax.jdo.annotations.PrimaryKey;
 import org.aggelos.baztag.api.Nabaztag;
 
 import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
+import com.google.appengine.api.datastore.Text;
 import com.google.appengine.api.users.User;
 
 /**
@@ -26,6 +28,9 @@ public class PNabaztag {
 	 */
 	@Persistent
 	private String serialNumber;
+	
+	private String roger;
+	
 	@Persistent
 	private String token;
 	
@@ -33,7 +38,7 @@ public class PNabaztag {
 	private String name;
 	
 	@Persistent
-	private String signature;
+	private Text signature;
 	
 	@Persistent
 	private short version;
@@ -47,11 +52,127 @@ public class PNabaztag {
     private Key key;
 
     @Persistent
-    private User author;
+    private User owner;
     
     
     private Nabaztag bindedNabaztag;
+
+
+	public String getSerialNumber() {
+		return serialNumber;
+	}
+
+
+	public void setSerialNumber(String serialNumber) {
+		this.serialNumber = serialNumber;
+	}
+
+
+	public String getToken() {
+		return token;
+	}
+
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
+
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+	public String getSignature() {
+		return signature.getValue();
+	}
+
+
+	public void setSignature(String signature) {
+		this.signature = new Text(signature);
+	}
+
+
+	public short getVersion() {
+		return version;
+	}
+
+
+	public void setVersion(short version) {
+		this.version = version;
+	}
+
+
+	public Key getKey() {
+		return key;
+	}
+	
+	public String getKeyAsString() {
+		return KeyFactory.keyToString(key);
+	}
+
+
+	public void setKey(Key key) {
+		this.key = key;
+	}
+
+
+	public User getOwner() {
+		return owner;
+	}
+
+
+	public void setOwner(User author) {
+		this.owner = author;
+	}
+
+
+	public Nabaztag getBindedNabaztag() {
+		return bindedNabaztag;
+	}
+
+
+	public void setBindedNabaztag(Nabaztag bindedNabaztag) {
+		this.bindedNabaztag = bindedNabaztag;
+	}
+    
+    
+	@Override
+	public String toString() {
+		return serialNumber+" - "+token;
+	}
+	/**
+	 * This will generate a Nabaztag that can be used to interact with the API
+	 * @return
+	 */
+	public Nabaztag generateBindedNabaztag() {
+		Nabaztag nab = new Nabaztag(serialNumber, token);
+		this.bindedNabaztag = nab;
+		return nab;
+	}
 	
 	
+	/**
+	 * Merges the Nabaztag values from the API in the current {@link PNabaztag}
+	 * @param tag
+	 */
+	public void merge(Nabaztag tag) {
+		this.name = tag.getName();
+		setSignature(tag.getSignature());
+		switch (tag.getVersion()) {
+		case V1:
+			this.version = 1;
+			break;
+		case V2:
+			this.version = 2;
+			break;
+		}
+		
+	}
 	
 }

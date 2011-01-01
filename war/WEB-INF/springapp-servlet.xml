@@ -10,9 +10,12 @@
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
 		p:prefix="/WEB-INF/views/" p:suffix=".jsp" />
+		
+	<bean id="nabaztagDao" class="org.aggelos.baztag.dao.NabaztagDao"/>
+	<bean id="pmf" class="org.aggelos.baztag.dao.PersistenceManagerFactoryPurveyor"/>
 
 
-	<context:component-scan base-package="org.aggelos.baztag.controller" />
+	<context:component-scan base-package="org.aggelos.baztag" />
 	<context:annotation-config />
 	<mvc:annotation-driven />
 	
