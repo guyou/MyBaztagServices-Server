@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.aggelos.baztag.api.Nabaztag;
 import org.aggelos.baztag.api.xml.ApiAnswer;
 import org.aggelos.baztag.dao.NabaztagDao;
+import org.aggelos.baztag.exception.DaoException;
 import org.aggelos.baztag.model.PNabaztag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -75,12 +76,48 @@ public class NabaztagController {
 			model.addAttribute("content", "inc/nab_display.jsp");
 		}
 		else {
-			PNabaztag tag = dao.getNabaztagById(UserServiceFactory.getUserService().getCurrentUser(), value);
+			// TODO : may return nothing
+			PNabaztag tag = dao.getNabaztagById(value);
 			model.addAttribute("tag", tag);
 			model.addAttribute("content", "inc/nab_display.jsp");
 		}
 		return "index";
 	}
+	
+	@RequestMapping(value = "delete/{value}",method = RequestMethod.GET)
+	public String deleteNabaztag(Model model, @PathVariable String value) {
+		// First of all we will check the given nabaztag is the user's nabaztag
+		PNabaztag tag = dao.getNabaztagById(value);
+		if(tag==null) {
+			// if not, error message, and redirect to home
+			// TODO : redirect to Nabaztag list
+			model.addAttribute("errorMsg", "Ah ? Vous n'avez aucun nabaztag de ce genre ! ");
+			return "redirect:/";
+		}
+		User currentUser = UserServiceFactory.getUserService().getCurrentUser();
+		if(!tag.getOwner().equals(currentUser)) {
+			// if not, error message, and redirect to home
+			// TODO : redirect to Nabaztag list
+			model.addAttribute("errorMsg", "Ah ? Vous n'avez aucun nabaztag de ce genre ! ");
+			return "redirect:/";
+		}
+		model.addAttribute("content", "inc/delete_tag.jsp");
+		model.addAttribute("tagToDelete", tag);
+		return "index";
+	}
+	
+	@RequestMapping(value = "delete/{value}",method = RequestMethod.GET)
+	public String deleteNabaztagConfirmed(Model model, @PathVariable String value) {
+		// First of all we will check the given nabaztag is the user's nabaztag
+		try{
+			dao.deleteNabaztag(UserServiceFactory.getUserService().getCurrentUser(), value);
+		}
+		catch(DaoException e) {
+			model.addAttribute("errorMsg", e.getLocalizedMessage());
+		}
+		return "index";
+	}
+	
 	
 	@RequestMapping("purge")
 	public String purge() {

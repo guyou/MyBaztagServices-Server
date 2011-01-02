@@ -5,6 +5,7 @@ import java.util.List;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
+import org.aggelos.baztag.exception.DaoException;
 import org.aggelos.baztag.model.PNabaztag;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -12,7 +13,11 @@ import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.users.User;
 
-
+/**
+ * provides CRUD operations for a Nabaztag
+ * @author Sinmaniphel
+ *
+ */
 public class NabaztagDao {
 	
 	@Autowired
@@ -47,10 +52,16 @@ public class NabaztagDao {
 		
 	}
 	
-	public PNabaztag getNabaztagById(User user,String key) {
+	public PNabaztag getNabaztagById(String key) {
 		PersistenceManager pm = purveyor.get().getPersistenceManager();
 		Key id = KeyFactory.stringToKey(key);
 		return pm.getObjectById(PNabaztag.class,id);
+		
+	}
+
+	public void deleteNabaztag(User currentUser, String value) throws DaoException{
+		PersistenceManager pm = purveyor.get().getPersistenceManager();
+		//Key id = KeyFactory.stringToKey(key);
 		
 	}
 	
