@@ -23,7 +23,7 @@
 		<h1><a href="/">My Baztag Services</a></h1>
 		<% if(user == null) {
 			%>
-		<p>Qui êtes vous ? <a href="<%= userService.createLoginURL("") %>">
+		<p>Qui êtes vous ? <a href="<%= userService.createLoginURL("/welcome") %>">
 		 connectez vous ! 
 		 </a>
 		 </p>
@@ -32,15 +32,15 @@
 		else {
 		
 		%>
-		<p>Bonjour, <%= user.getNickname() %>, tu veux peut-être <a href="<%= userService.createLogoutURL("") %>">te déconnecter ?</a></p>
+		<p>Bonjour, <%= user.getNickname() %>, tu veux peut-être <a href="<%= userService.createLogoutURL("/") %>">te déconnecter ?</a></p>
 		<%}%>
 	</div>
 	<!-- end #logo -->
 	<div id="menu">
 		<ul>
 			<li class="active"><a href="#">Accueil</a></li>
-			<li><a href="#">Qu'est-ce que c'est ?</a></li>
-			<li><a href="#">Nous contacter</a></li>
+			<li><a href="/about">Qu'est-ce que c'est ?</a></li>
+			<li><a href="#">Contact</a></li>
 		</ul>
 	</div>
 	<!-- end #menu -->

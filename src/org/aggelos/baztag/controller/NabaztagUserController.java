@@ -34,9 +34,10 @@ public class NabaztagUserController {
 		return "index";
 	}
 	
-	@RequestMapping("/simple")
-	public @ResponseBody String simple() {
-		return "Hello world!";
+	@RequestMapping("/about")
+	public String aboutHandler(Model model) {
+		model.addAttribute("content", "inc/about.jsp");
+		return "index";
 	}
 
 	
