@@ -66,6 +66,7 @@ public class NabaztagController {
 		ptag.merge(tag);
 		dao.save(ptag);
 		session.setAttribute("currentTag", ptag);
+		// force rebuild list
 		return "forward:/nabaztag/info/current";
 	}
 	
@@ -73,13 +74,18 @@ public class NabaztagController {
 	public String displayNabaztag(HttpSession session, Model model, @PathVariable String value) {
 		if("current".equals(value)) {
 			model.addAttribute("tag", ((PNabaztag)session.getAttribute("currentTag")).getBindedNabaztag());
+			model.addAttribute("ptag", session.getAttribute("currentTag"));
 			model.addAttribute("content", "inc/nab_display.jsp");
 		}
 		else {
 			// TODO : may return nothing
 			PNabaztag tag = dao.getNabaztagById(value);
-			model.addAttribute("tag", tag);
+			model.addAttribute("ptag", tag);
+			Nabaztag binded = tag.generateBindedNabaztag();
+			binded.updateStatus();
+			model.addAttribute("tag",binded);
 			model.addAttribute("content", "inc/nab_display.jsp");
+			session.setAttribute("currentTag", tag);
 		}
 		return "index";
 	}
@@ -101,18 +107,24 @@ public class NabaztagController {
 			model.addAttribute("errorMsg", "Ah ? Vous n'avez aucun nabaztag de ce genre ! ");
 			return "redirect:/";
 		}
-		model.addAttribute("content", "inc/delete_tag.jsp");
+		model.addAttribute("content", "inc/nab_delete.jsp");
 		model.addAttribute("tagToDelete", tag);
 		return "index";
 	}
 	
-	@RequestMapping(value = "delete/{value}",method = RequestMethod.GET)
-	public String deleteNabaztagConfirmed(Model model, @PathVariable String value) {
+	@RequestMapping(value = "delete/{value}",method = RequestMethod.POST)
+	public String deleteNabaztagConfirmed(Model model, @PathVariable String value, HttpSession session) {
 		// First of all we will check the given nabaztag is the user's nabaztag
 		try{
 			dao.deleteNabaztag(UserServiceFactory.getUserService().getCurrentUser(), value);
+			// return to homepage with info message
+			model.addAttribute("infoMsg", "Le lapin a été retiré de votre compte");
+			// force rebuild list
+			session.removeAttribute("nabaztagList");
+			
 		}
 		catch(DaoException e) {
+			// this may happen in case the user tried to delete another user's nabaztag
 			model.addAttribute("errorMsg", e.getLocalizedMessage());
 		}
 		return "index";

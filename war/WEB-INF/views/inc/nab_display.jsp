@@ -7,4 +7,7 @@
 <div class="entry">
 	<p>${tag.signature}</p>
 </div>
+<div class="meta">
+				<p class="links"><a href="/nabaztag/delete/${ptag.keyAsString }" class="comments">Supprimer ce nabaztag</a></p>
+			</div>
 </div>

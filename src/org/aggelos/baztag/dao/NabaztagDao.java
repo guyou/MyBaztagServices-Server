@@ -61,7 +61,13 @@ public class NabaztagDao {
 
 	public void deleteNabaztag(User currentUser, String value) throws DaoException{
 		PersistenceManager pm = purveyor.get().getPersistenceManager();
-		//Key id = KeyFactory.stringToKey(key);
+		// first we are going to check that the nabaztag is one of the user's
+		Key id = KeyFactory.stringToKey(value);
+		PNabaztag tag = pm.getObjectById(PNabaztag.class,id);
+		if(!tag.getOwner().equals(currentUser)) {
+			throw new DaoException("Euh dis, je ne crois pas que tu aies le droit de faire ça, il est pas à toi ce lapin");
+		}
+		pm.deletePersistent(tag);
 		
 	}
 	
