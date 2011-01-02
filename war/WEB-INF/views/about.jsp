@@ -38,8 +38,8 @@
 	<!-- end #logo -->
 	<div id="menu">
 		<ul>
-			<li class="active"><a href="#">Accueil</a></li>
-			<li><a href="/about">Qu'est-ce que c'est ?</a></li>
+			<li ><a href="#">Accueil</a></li>
+			<li class="active"><a href="/about">Qu'est-ce que c'est ?</a></li>
 			<li><a href="#">Contact</a></li>
 		</ul>
 	</div>
@@ -49,7 +49,7 @@
 <div id="page">
 	
 	<div id="content">
-	<jsp:include page="${content}" />
+	<jsp:include page="/WEB-INF/views/inc/about.jsp" />
 	</div>
 	<!-- end #content -->
 	<%if(user!=null) {

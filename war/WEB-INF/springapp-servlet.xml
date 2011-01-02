@@ -23,5 +23,14 @@
 	<mvc:resources mapping="/resources/**" location="/resources/" />
 	
 	<!-- mvc:view-controller path="/" view-name="home"/-->
+	
+	<!-- adding the interceptor that populates the session with user infos once the user is connecte -->
+	<mvc:interceptors>
+	    <mvc:interceptor>
+	        <mvc:mapping path="/*"/>
+	        <bean class="org.aggelos.baztag.interceptors.UserConnectedInterceptor" />
+	    </mvc:interceptor>
+	</mvc:interceptors>
+
 
 </beans>

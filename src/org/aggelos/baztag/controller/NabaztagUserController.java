@@ -37,7 +37,7 @@ public class NabaztagUserController {
 	@RequestMapping("/about")
 	public String aboutHandler(Model model) {
 		model.addAttribute("content", "inc/about.jsp");
-		return "index";
+		return "about";
 	}
 
 	
