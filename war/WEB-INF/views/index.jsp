@@ -65,7 +65,7 @@
 </div>
 <!-- end #page -->
 <div id="footer">
-	<p>&copy; 2011, tous droits réservés Clément Arnoux. Design "Customize" par <a href="http://www.freecsstemplates.org/">Free CSS Templates</a>.</p>
+	<p>&copy; 2011, tous droits réservés Clément Arnoux. Design "Customize" par <a href="http://www.freecsstemplates.org/">Free CSS Templates</a>, icone et favicon Nabaztag Icons par <a href="http://tpdkcasimir.deviantart.com/art/Nabaztag-Icons-35572391">TPDKCasimir</a> .</p>
 </div>
 <!-- end #footer -->
 </body>
