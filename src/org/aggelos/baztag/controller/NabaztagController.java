@@ -146,9 +146,12 @@ public class NabaztagController {
 			return "redirect:/";
 		}
 		Nabaztag binded = tag.getBindedNabaztag();
-		binded.setAwake(!binded.isAwake());
+		if(!binded.setAwake(!binded.isAwake())) {
+			model.addAttribute("errorMsg", binded.getLastErrors().get(0).getMessage());
+			return "redirect:/";
+		}
 		
-		return "forward:/display/current";
+		return "forward:/nabaztag/info/current";
 	}
 
 }
