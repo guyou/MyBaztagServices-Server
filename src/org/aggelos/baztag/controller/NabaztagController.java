@@ -81,11 +81,12 @@ public class NabaztagController {
 			// TODO : may return nothing
 			PNabaztag tag = dao.getNabaztagById(value);
 			model.addAttribute("ptag", tag);
+			session.setAttribute("currentTag", tag);
 			Nabaztag binded = tag.generateBindedNabaztag();
 			binded.updateStatus();
 			model.addAttribute("tag",binded);
 			model.addAttribute("content", "inc/nab_display.jsp");
-			session.setAttribute("currentTag", tag);
+			
 		}
 		return "index";
 	}
