@@ -59,7 +59,7 @@ public class NabaztagController {
 			for(ApiAnswer answer : tag.getLastErrors()) {
 				errors += "<br/>"+answer.getMessage();
 			}
-			model.addAttribute("errorMsg", "oooooh... Ce nabaztag n'a pas pu être reconnu par les serveurs de Violet par ce que : "+errors);
+			model.addAttribute("errorMsg", "oooooh... Ce nabaztag n'a pas pu ï¿½tre reconnu par les serveurs de Violet par ce que : "+errors);
 			return "redirect:/nabaztag/add";
 		}
 		
@@ -118,7 +118,7 @@ public class NabaztagController {
 		try{
 			dao.deleteNabaztag(UserServiceFactory.getUserService().getCurrentUser(), value);
 			// return to homepage with info message
-			model.addAttribute("infoMsg", "Le lapin a été retiré de votre compte");
+			model.addAttribute("infoMsg", "Le lapin a ï¿½tï¿½ retirï¿½ de votre compte");
 			// force rebuild list
 			session.removeAttribute("nabaztagList");
 			
@@ -135,6 +135,19 @@ public class NabaztagController {
 	public String purge() {
 		dao.purge();
 		return "index";
+	}
+	
+	@RequestMapping("changeState")
+	public String wakeUp(HttpSession session, Model model) {
+		PNabaztag tag = (PNabaztag) session.getAttribute("currentTag");
+		if(tag==null) {
+			model.addAttribute("errorMsg", "aaah ! je ne sais pas de quel Nabaztag on parle !");
+			return "redirect:/";
+		}
+		Nabaztag binded = tag.getBindedNabaztag();
+		binded.setAwake(!binded.isAwake());
+		
+		return "forward:/display/current";
 	}
 
 }

@@ -6,6 +6,9 @@
 <h1 class="title"><c:out value="${tag.name}" /></h1>
 <div class="entry">
 	<p>${tag.signature}</p>
+	<c:if test="${tag.awake}" >Ah, il est réveillé. <a href="/nabaztag/changeState">Lui dire de dormir ?</a></c:if>
+	<c:if test="${not tag.awake}" >Ah, il dort ! <a href="/nabaztag/changeState">Le révéiller ?</a></c:if>
+	
 </div>
 <div class="meta">
 				<p class="links"><a href="/nabaztag/delete/${ptag.keyAsString }" class="comments">Supprimer ce nabaztag</a></p>
