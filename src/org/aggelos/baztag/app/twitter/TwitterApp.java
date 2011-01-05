@@ -8,6 +8,7 @@ import twitter4j.DirectMessage;
 import twitter4j.ResponseList;
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
+import twitter4j.conf.ConfigurationBuilder;
 
 /**
  * The behaviour class for the twitter app
@@ -18,12 +19,29 @@ public class TwitterApp implements Application {
 	// that's where the good stuff happens
 	@Override
 	public void doYourStuff(ApplicationConfig config, PNabaztag ptag) {
-		Twitter twitter = new TwitterFactory().getInstance();
-		ResponseList<DirectMessage> msgs = twitter.getDirectMessages();
-		for(DirectMessage msg:msgs) {
+		TwitterConfig tconf = (TwitterConfig) config;
+		Twitter twitter = configureTwitter(tconf);
+		if(tconf.isReadDirectMessages()) {
+			
+		}
+		if(tconf.isReadMentions()) {
 			
 		}
 	
+	}
+
+	/**
+	 * @param tconf
+	 */
+	private Twitter configureTwitter(TwitterConfig tconf) {
+		ConfigurationBuilder cb = new ConfigurationBuilder();
+		cb.setDebugEnabled(true)
+		  .setOAuthConsumerKey(consumerKey)
+		  .setOAuthConsumerSecret(consumerSecret)
+		  .setOAuthAccessToken(tconf.getToken())
+		  .setOAuthAccessTokenSecret(tconf.getTokenSecret());
+		TwitterFactory tf = new TwitterFactory(cb.build());
+		return tf.getInstance();
 	}
 	
 	
