@@ -7,6 +7,9 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
+import org.aggelos.baztag.api.NabaztagInstructionSequence;
+import org.aggelos.baztag.api.inst.TextInstruction;
+import org.aggelos.baztag.api.inst.VoiceInstruction;
 import org.aggelos.baztag.model.PNabaztag;
 
 import com.google.appengine.api.datastore.Key;
@@ -29,7 +32,47 @@ public abstract class ApplicationConfig {
 	@Persistent 
 	protected PNabaztag nabaztag;
 	
+	@Persistent
+	protected int frequency;
+	
+	@Persistent
+	protected String voice;
 	
 	public abstract String getApplicationIdentifier();
+	
+	public void say(String text) {
+		NabaztagInstructionSequence seq = new NabaztagInstructionSequence();
+		VoiceInstruction vi = new VoiceInstruction(voice);
+		TextInstruction ti = new TextInstruction(text);
+		seq.add(ti);
+		seq.add(vi);
+		nabaztag.getBindedNabaztag().execute(seq);
+	}
+
+	public PNabaztag getNabaztag() {
+		return nabaztag;
+	}
+
+	public void setNabaztag(PNabaztag nabaztag) {
+		this.nabaztag = nabaztag;
+	}
+
+	public int getFrequency() {
+		return frequency;
+	}
+
+	public void setFrequency(int frequency) {
+		this.frequency = frequency;
+	}
+
+	public String getVoice() {
+		return voice;
+	}
+
+	public void setVoice(String voice) {
+		this.voice = voice;
+	}
+	
+	
 	
 }

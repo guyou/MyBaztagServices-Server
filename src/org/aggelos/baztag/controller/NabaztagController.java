@@ -19,6 +19,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserServiceFactory;
+import com.google.appengine.api.xmpp.JID;
+import com.google.appengine.api.xmpp.Message;
+import com.google.appengine.api.xmpp.MessageBuilder;
+import com.google.appengine.api.xmpp.SendResponse;
+import com.google.appengine.api.xmpp.XMPPService;
+import com.google.appengine.api.xmpp.XMPPServiceFactory;
 
 /**
  * A controller for all rabbit related operations (CRUD etc)
@@ -84,8 +90,25 @@ public class NabaztagController {
 			session.setAttribute("currentTag", tag);
 			Nabaztag binded = tag.generateBindedNabaztag();
 			binded.updateStatus();
+			XMPPService xmpp = XMPPServiceFactory.getXMPPService();
+			JID doudou = new JID("002185BA756A".toLowerCase()+"@xmpp.nabaztag.com");
+			Message msg = new MessageBuilder()
+            .withRecipientJids(doudou)
+            .withBody("test")
+            .build();
+			LOGGER.info(msg.toString());
+                
+        boolean messageSent = false;
+        if (xmpp.getPresence(doudou).isAvailable()) {
+            SendResponse status = xmpp.sendMessage(msg);
+            messageSent = (status.getStatusMap().get(doudou) == SendResponse.Status.SUCCESS);
+        }
+
+			
+			model.addAttribute("isOnline", xmpp.getPresence(doudou).isAvailable());
 			model.addAttribute("tag",binded);
 			model.addAttribute("content", "inc/nab_display.jsp");
+			
 			
 		}
 		return "index";

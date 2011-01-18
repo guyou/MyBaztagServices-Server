@@ -65,10 +65,22 @@ public class NabaztagDao {
 		Key id = KeyFactory.stringToKey(value);
 		PNabaztag tag = pm.getObjectById(PNabaztag.class,id);
 		if(!tag.getOwner().equals(currentUser)) {
-			throw new DaoException("Euh dis, je ne crois pas que tu aies le droit de faire ça, il est pas à toi ce lapin");
+			throw new DaoException("Euh dis, je ne crois pas que tu aies le droit de faire ï¿½a, il est pas ï¿½ toi ce lapin");
 		}
 		pm.deletePersistent(tag);
 		
+	}
+	
+	public PNabaztag getBySerialNumber(String sn) {
+		PersistenceManager pm = purveyor.get().getPersistenceManager();
+		Query query = pm.newQuery(PNabaztag.class);
+		
+		query.setFilter("serialNumber == sn");
+		query.declareParameters("String sn");
+		
+		List<PNabaztag> tags = (List<PNabaztag>) query.execute(sn);
+		if(tags.size()==0) return null;
+		return tags.get(0);
 	}
 	
 }

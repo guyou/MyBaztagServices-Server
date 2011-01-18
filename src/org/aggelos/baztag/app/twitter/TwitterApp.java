@@ -1,12 +1,25 @@
 package org.aggelos.baztag.app.twitter;
 
+import org.aggelos.baztag.api.Nabaztag;
+import org.aggelos.baztag.api.NabaztagInstructionSequence;
+import org.aggelos.baztag.api.inst.TextInstruction;
+import org.aggelos.baztag.api.inst.VoiceInstruction;
+import org.aggelos.baztag.api.parts.Lang;
 import org.aggelos.baztag.app.Application;
 import org.aggelos.baztag.app.ApplicationConfig;
 import org.aggelos.baztag.model.PNabaztag;
 
+import com.google.appengine.api.xmpp.JID;
+import com.google.appengine.api.xmpp.XMPPService;
+import com.google.appengine.api.xmpp.XMPPServiceFactory;
+import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
+
 import twitter4j.DirectMessage;
+import twitter4j.Paging;
 import twitter4j.ResponseList;
+import twitter4j.Status;
 import twitter4j.Twitter;
+import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.conf.ConfigurationBuilder;
 
@@ -20,7 +33,14 @@ public class TwitterApp implements Application {
 	@Override
 	public void doYourStuff(ApplicationConfig config, PNabaztag ptag) {
 		TwitterConfig tconf = (TwitterConfig) config;
+		Nabaztag tag = ptag.getBindedNabaztag();
+		config.say("Twitter ! ");
 		Twitter twitter = configureTwitter(tconf);
+		try {
+			String messages = readHome(twitter,tconf,ptag.getBindedNabaztag());
+		} catch (TwitterException e) {
+			e.printStackTrace();
+		}
 		if(tconf.isReadDirectMessages()) {
 			
 		}
@@ -28,6 +48,34 @@ public class TwitterApp implements Application {
 			
 		}
 	
+	}
+	
+	public void say(String text, Nabaztag nabaztag) {
+		NabaztagInstructionSequence seq = new NabaztagInstructionSequence();
+		VoiceInstruction vi = new VoiceInstruction(Lang.FRJulie);
+		TextInstruction ti = new TextInstruction(text);
+		seq.add(ti);
+		seq.add(vi);
+		nabaztag.execute(seq);
+	}
+
+	private String readHome(Twitter twitter, TwitterConfig config,Nabaztag tag) throws TwitterException {
+		if(config.getLastHomeId()!=-1) {
+			Paging homePaging = new Paging(0,5,config.getLastHomeId());
+			ResponseList<Status> status = twitter.getHomeTimeline(homePaging);
+			for(Status stat:status) {
+				say(stat.getUser().getName()+" : "+stat.getText(),tag);
+			}
+		}else {
+			Paging homePaging = new Paging(1,5);
+			ResponseList<Status> status = twitter.getHomeTimeline(homePaging);
+			StringBuffer buffer = new StringBuffer("Twitter : ");
+			for(Status stat:status) {
+				buffer.append(stat.getUser().getName()+" : "+stat.getText()+".");
+			}
+			say(buffer.toString(), tag);
+		}
+		return null;
 	}
 
 	/**

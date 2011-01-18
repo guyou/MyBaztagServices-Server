@@ -40,6 +40,41 @@ public class TwitterConfig extends ApplicationConfig{
 	@Persistent
 	private int readCount;
 
+	@Persistent
+	private int lastHomeId=-1;
+	
+	@Persistent
+	private int lastDirectId=-1;
+	
+	@Persistent
+	private int lastMentionId=-1;
+	
+	
+	
+	public int getLastHomeId() {
+		return lastHomeId;
+	}
+
+	public void setLastHomeId(int lastHomeId) {
+		this.lastHomeId = lastHomeId;
+	}
+
+	public int getLastDirectId() {
+		return lastDirectId;
+	}
+
+	public void setLastDirectId(int lastDirectId) {
+		this.lastDirectId = lastDirectId;
+	}
+
+	public int getLastMentionId() {
+		return lastMentionId;
+	}
+
+	public void setLastMentionId(int lastMentionId) {
+		this.lastMentionId = lastMentionId;
+	}
+
 	public String getToken() {
 		return token;
 	}
