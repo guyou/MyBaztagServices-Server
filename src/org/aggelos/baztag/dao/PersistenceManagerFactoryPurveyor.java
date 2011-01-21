@@ -8,9 +8,9 @@ public class PersistenceManagerFactoryPurveyor {
 	private static final PersistenceManagerFactory pmfInstance =
         JDOHelper.getPersistenceManagerFactory("transactions-optional");
 
-    private PersistenceManagerFactoryPurveyor() {}
+    public PersistenceManagerFactoryPurveyor() {}
 
-    public static PersistenceManagerFactory get() {
+    public PersistenceManagerFactory get() {
         return pmfInstance;
     }
 

@@ -125,7 +125,7 @@ public class ProxyController {
 		 * that a new stamp has been found and not parametered
 		 * 
 		 */
-		Ztamp chip = tampDao.findByRfid(t);
+		Ztamp chip = tampDao.findByRfId(t);
 		PNabaztag associatedTag = tagDao.getBySerialNumber(sn);
 		
 		if(chip==null) {
@@ -134,7 +134,7 @@ public class ProxyController {
 			chip.setHashCode(t);
 			chip.setOwner(owner);
 			tampDao.save(chip);
-			notificationsDao.notify(new NewStampNotification(owner,associatedTag,))
+			notificationsDao.save(new NewStampNotification(owner,associatedTag,chip));
 		}
 		
 		return "";
