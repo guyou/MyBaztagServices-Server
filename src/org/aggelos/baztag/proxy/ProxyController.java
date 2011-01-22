@@ -23,6 +23,7 @@ import org.aggelos.baztag.dao.NotificationsDao;
 import org.aggelos.baztag.dao.ZtampDao;
 import org.aggelos.baztag.model.PNabaztag;
 import org.aggelos.baztag.model.Ztamp;
+import org.aggelos.baztag.model.notif.NewStampNotification;
 import org.apache.jasper.tagplugins.jstl.core.Url;
 import org.apache.tools.ant.types.resources.comparators.Date;
 import org.springframework.beans.factory.annotation.Autowired;

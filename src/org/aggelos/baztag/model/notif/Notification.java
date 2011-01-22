@@ -23,5 +23,32 @@ public abstract class Notification {
 	
 	@Persistent
 	protected String level;
+
+	
+	public User getTarget() {
+		return target;
+	}
+
+	public void setTarget(User target) {
+		this.target = target;
+	}
+
+	public NotificationLevel getLevel() {
+		return NotificationLevel.valueOf(level);
+	}
+
+	public void setLevel(NotificationLevel level) {
+		this.level = level.name();
+	}
+
+	public Notification(User target, NotificationLevel level) {
+		super();
+		this.target = target;
+		setLevel(level);
+	}
+	
+	public abstract String getHtmlOutput();
+	
+	
 	
 }
