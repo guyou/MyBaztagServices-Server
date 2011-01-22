@@ -5,6 +5,7 @@ import java.util.List;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
+import org.aggelos.baztag.app.ZTampApplicationConfig;
 import org.aggelos.baztag.model.Ztamp;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -40,6 +41,23 @@ public class ZtampDao {
 	public void save(Ztamp chip) {
 		PersistenceManager pm = purveyor.get().getPersistenceManager();
 		pm.makePersistent(chip);		
+	}
+	
+	/**
+	 * Will return several apps configs for this ztamp
+	 * @param chip : the rfid to which we added an application
+	 * @return
+	 */
+	public List<ZTampApplicationConfig> getAppConfigs(Ztamp chip) {
+		PersistenceManager pm = purveyor.get().getPersistenceManager();
+		
+		Query q = pm.newQuery(ZTampApplicationConfig.class);
+		q.setFilter("ztamp = chip");
+		q.declareParameters(Ztamp.class.getName()+" chip");
+		
+		List<ZTampApplicationConfig> confs = (List<ZTampApplicationConfig>) q.execute(chip);
+		return confs;
+		
 	}
 
 }

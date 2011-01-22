@@ -18,6 +18,9 @@ import org.aggelos.baztag.api.Nabaztag;
 import org.aggelos.baztag.api.NabaztagInstructionSequence;
 import org.aggelos.baztag.api.SimpleNabaztag;
 import org.aggelos.baztag.api.inst.TextInstruction;
+import org.aggelos.baztag.app.Application;
+import org.aggelos.baztag.app.ApplicationBinder;
+import org.aggelos.baztag.app.ZTampApplicationConfig;
 import org.aggelos.baztag.dao.NabaztagDao;
 import org.aggelos.baztag.dao.NotificationsDao;
 import org.aggelos.baztag.dao.ZtampDao;
@@ -56,6 +59,9 @@ public class ProxyController {
 	
 	@Autowired
 	private NotificationsDao notificationsDao;
+	
+	@Autowired
+	private ApplicationBinder binder;
 	
 	// TODO : find why this (bootcode providing) does not work locally
 	/**
@@ -136,6 +142,12 @@ public class ProxyController {
 			chip.setOwner(owner);
 			tampDao.save(chip);
 			notificationsDao.save(new NewStampNotification(owner,associatedTag,chip));
+		}
+		else {
+			for(ZTampApplicationConfig conf:tampDao.getAppConfigs(chip)) {
+				binder.forName(conf.getApplicationIdentifier()).doYourStuff(conf, associatedTag);
+				
+			}
 		}
 		
 		return "";
