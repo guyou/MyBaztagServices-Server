@@ -34,7 +34,7 @@ public class TwitterApp implements Application {
 	public void doYourStuff(ApplicationConfig config, PNabaztag ptag) {
 		TwitterConfig tconf = (TwitterConfig) config;
 		Nabaztag tag = ptag.getBindedNabaztag();
-		config.say("Twitter ! ");
+		//config.say("Twitter ! ");
 		Twitter twitter = configureTwitter(tconf);
 		try {
 			String messages = readHome(twitter,tconf,ptag.getBindedNabaztag());

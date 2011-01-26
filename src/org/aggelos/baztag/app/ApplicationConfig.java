@@ -11,6 +11,7 @@ import org.aggelos.baztag.api.NabaztagInstructionSequence;
 import org.aggelos.baztag.api.inst.TextInstruction;
 import org.aggelos.baztag.api.inst.VoiceInstruction;
 import org.aggelos.baztag.model.PNabaztag;
+import org.aggelos.baztag.model.Thing;
 
 import com.google.appengine.api.datastore.Key;
 
@@ -30,7 +31,7 @@ public abstract class ApplicationConfig {
 	
 	// a config is associated to a PNabaztag
 	@Persistent 
-	protected PNabaztag nabaztag;
+	protected Thing thing;
 	
 	@Persistent
 	protected int frequency;
@@ -40,21 +41,21 @@ public abstract class ApplicationConfig {
 	
 	public abstract String getApplicationIdentifier();
 	
-	public void say(String text) {
+	/*public void say(String text) {
 		NabaztagInstructionSequence seq = new NabaztagInstructionSequence();
 		VoiceInstruction vi = new VoiceInstruction(voice);
 		TextInstruction ti = new TextInstruction(text);
 		seq.add(ti);
 		seq.add(vi);
-		nabaztag.getBindedNabaztag().execute(seq);
+		thing.getBindedNabaztag().execute(seq);
+	}*/
+
+	public Thing getThing() {
+		return thing;
 	}
 
-	public PNabaztag getNabaztag() {
-		return nabaztag;
-	}
-
-	public void setNabaztag(PNabaztag nabaztag) {
-		this.nabaztag = nabaztag;
+	public void setThing(Thing nabaztag) {
+		this.thing = nabaztag;
 	}
 
 	public int getFrequency() {

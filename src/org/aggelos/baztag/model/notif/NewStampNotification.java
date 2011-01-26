@@ -26,7 +26,7 @@ public class NewStampNotification extends Notification {
 
 	@Override
 	public String getHtmlOutput() {
-		return "<p>Ooooooooooooooh ! "+tag.getName()+" a reniflé un nouveau ztamp : "+chip.getHashCode()+"</p>";
+		return "<p>Ooooooooooooooh ! "+tag.getName()+" a reniflé un nouveau ztamp : "+chip.getSerialNumber()+"</p>";
 	}
 	
 	

@@ -5,40 +5,28 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.aggelos.baztag.api.Nabaztag;
-import org.aggelos.baztag.api.NabaztagInstructionSequence;
-import org.aggelos.baztag.api.SimpleNabaztag;
-import org.aggelos.baztag.api.inst.TextInstruction;
-import org.aggelos.baztag.app.Application;
 import org.aggelos.baztag.app.ApplicationBinder;
-import org.aggelos.baztag.app.ZTampApplicationConfig;
+import org.aggelos.baztag.app.ApplicationConfig;
 import org.aggelos.baztag.dao.NabaztagDao;
 import org.aggelos.baztag.dao.NotificationsDao;
 import org.aggelos.baztag.dao.ZtampDao;
 import org.aggelos.baztag.model.PNabaztag;
 import org.aggelos.baztag.model.Ztamp;
 import org.aggelos.baztag.model.notif.NewStampNotification;
-import org.apache.jasper.tagplugins.jstl.core.Url;
-import org.apache.tools.ant.types.resources.comparators.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.appengine.api.users.User;
-import com.google.appengine.api.users.UserServiceFactory;
 
 /**
  * The purpose of this class is to emulate the violet server
@@ -138,13 +126,13 @@ public class ProxyController {
 		if(chip==null) {
 			chip = new Ztamp();
 			User owner = associatedTag.getOwner();
-			chip.setHashCode(t);
+			chip.setSerialNumber(t);
 			chip.setOwner(owner);
 			tampDao.save(chip);
 			notificationsDao.save(new NewStampNotification(owner,associatedTag,chip));
 		}
 		else {
-			for(ZTampApplicationConfig conf:tampDao.getAppConfigs(chip)) {
+			for(ApplicationConfig conf:tampDao.getAppConfigs(chip)) {
 				binder.forName(conf.getApplicationIdentifier()).doYourStuff(conf, associatedTag);
 				
 			}
