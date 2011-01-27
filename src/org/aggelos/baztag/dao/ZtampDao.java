@@ -6,8 +6,11 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
 import org.aggelos.baztag.app.ApplicationConfig;
+import org.aggelos.baztag.model.PNabaztag;
 import org.aggelos.baztag.model.Ztamp;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.google.appengine.api.users.User;
 
 
 public class ZtampDao {
@@ -23,8 +26,8 @@ public class ZtampDao {
 	public Ztamp findByRfId(String rfid) {
 		PersistenceManager pm = purveyor.get().getPersistenceManager();
 		Query query = pm.newQuery(Ztamp.class);
-		query.setFilter("hashcode = rfid");
-		query.declareParameters("String rfi");
+		query.setFilter("serialNumber == rfid");
+		query.declareParameters("String rfid");
 		
 		List<Ztamp> tamps = (List<Ztamp>) query.execute(rfid);
 		if(tamps.size()==0) {
@@ -52,12 +55,24 @@ public class ZtampDao {
 		PersistenceManager pm = purveyor.get().getPersistenceManager();
 		
 		Query q = pm.newQuery(ApplicationConfig.class);
-		q.setFilter("ztamp = chip");
+		q.setFilter("ztamp == chip");
 		q.declareParameters(Ztamp.class.getName()+" chip");
 		
 		List<ApplicationConfig> confs = (List<ApplicationConfig>) q.execute(chip);
 		return confs;
 		
+	}
+
+	public List<Ztamp> list(User currentUser) {
+		PersistenceManager pm = purveyor.get().getPersistenceManager();
+		Query query = pm.newQuery(Ztamp.class);
+		
+		query.setFilter("owner == user");
+		query.declareParameters("com.google.appengine.api.users.User user");
+		
+		List<Ztamp> tags = (List<Ztamp>) query.execute(currentUser);
+		
+		return tags;
 	}
 
 }

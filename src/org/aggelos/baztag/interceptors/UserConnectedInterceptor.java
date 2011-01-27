@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.aggelos.baztag.dao.NabaztagDao;
+import org.aggelos.baztag.dao.ZtampDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -21,6 +22,9 @@ public class UserConnectedInterceptor extends HandlerInterceptorAdapter{
 	@Autowired
 	private NabaztagDao tagDao;
 	
+	@Autowired
+	private ZtampDao ztampDao;
+	
 	public boolean preHandle(
             HttpServletRequest request,
             HttpServletResponse response,
@@ -34,6 +38,7 @@ public class UserConnectedInterceptor extends HandlerInterceptorAdapter{
 			HttpSession curSession = request.getSession();
 			if(curSession.getAttribute("nabaztagList")==null) {
 				curSession.setAttribute("nabaztagList", tagDao.list(currentUser));
+				curSession.setAttribute("ztampList", ztampDao.list(currentUser));
 			}
 		}
 		/*

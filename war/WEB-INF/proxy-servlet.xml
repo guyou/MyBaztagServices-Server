@@ -8,7 +8,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
 		
-	
+	<import resource="beans.xml"/>
 
 	<context:component-scan base-package="org.aggelos.baztag.proxy" />
 	<context:annotation-config />

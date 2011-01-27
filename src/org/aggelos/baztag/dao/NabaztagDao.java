@@ -25,6 +25,9 @@ public class NabaztagDao {
 	
 	public void save(PNabaztag tag) {
 		PersistenceManager pm = purveyor.get().getPersistenceManager();
+		// hack : serial number queries must be case insensitive
+		tag.setSerialNumber(tag.getSerialNumber().toUpperCase());
+		tag.setToken(tag.getToken().toUpperCase());
 		pm.makePersistent(tag);
 		pm.close();
 	}
@@ -78,7 +81,7 @@ public class NabaztagDao {
 		query.setFilter("serialNumber == sn");
 		query.declareParameters("String sn");
 		
-		List<PNabaztag> tags = (List<PNabaztag>) query.execute(sn);
+		List<PNabaztag> tags = (List<PNabaztag>) query.execute(sn.toUpperCase());
 		if(tags.size()==0) return null;
 		return tags.get(0);
 	}

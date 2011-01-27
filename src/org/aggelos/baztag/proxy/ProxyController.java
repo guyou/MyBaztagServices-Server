@@ -123,6 +123,8 @@ public class ProxyController {
 		Ztamp chip = tampDao.findByRfId(t);
 		PNabaztag associatedTag = tagDao.getBySerialNumber(sn);
 		
+		
+		
 		if(chip==null) {
 			chip = new Ztamp();
 			User owner = associatedTag.getOwner();
