@@ -2,6 +2,7 @@ package org.aggelos.baztag.dao;
 
 import java.util.List;
 
+import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
@@ -10,6 +11,8 @@ import org.aggelos.baztag.model.PNabaztag;
 import org.aggelos.baztag.model.Ztamp;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.users.User;
 
 
@@ -42,8 +45,12 @@ public class ZtampDao {
 	 * @param chip
 	 */
 	public void save(Ztamp chip) {
-		PersistenceManager pm = purveyor.get().getPersistenceManager();
-		pm.makePersistent(chip);		
+		PersistenceManager pm = JDOHelper.getPersistenceManager(chip);
+		if(pm==null) {
+			pm = purveyor.get().getPersistenceManager();
+		}
+		pm.makePersistent(chip);
+		pm.close();
 	}
 	
 	/**
@@ -73,6 +80,12 @@ public class ZtampDao {
 		List<Ztamp> tags = (List<Ztamp>) query.execute(currentUser);
 		
 		return tags;
+	}
+
+	public Ztamp getZtampById(String value) {
+		PersistenceManager pm = purveyor.get().getPersistenceManager();
+		Key id = KeyFactory.stringToKey(value);
+		return pm.getObjectById(Ztamp.class,id);
 	}
 
 }

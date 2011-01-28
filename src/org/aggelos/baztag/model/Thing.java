@@ -10,6 +10,7 @@ import javax.jdo.annotations.PrimaryKey;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.users.User;
+import com.google.appengine.api.users.UserServiceFactory;
 
 /**
  * Something over Nabaztag and ZTamp
@@ -59,7 +60,6 @@ public abstract class Thing {
 	public String getKeyAsString() {
 		return KeyFactory.keyToString(key);
 	}
-
 
 	public void setKey(Key key) {
 		this.key = key;

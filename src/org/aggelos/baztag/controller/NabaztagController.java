@@ -90,22 +90,7 @@ public class NabaztagController {
 			session.setAttribute("currentTag", tag);
 			Nabaztag binded = tag.generateBindedNabaztag();
 			binded.updateStatus();
-			XMPPService xmpp = XMPPServiceFactory.getXMPPService();
-			JID doudou = new JID("002185BA756A".toLowerCase()+"@xmpp.nabaztag.com");
-			Message msg = new MessageBuilder()
-            .withRecipientJids(doudou)
-            .withBody("test")
-            .build();
-			LOGGER.info(msg.toString());
-                
-        boolean messageSent = false;
-        if (xmpp.getPresence(doudou).isAvailable()) {
-            SendResponse status = xmpp.sendMessage(msg);
-            messageSent = (status.getStatusMap().get(doudou) == SendResponse.Status.SUCCESS);
-        }
-
 			
-			model.addAttribute("isOnline", xmpp.getPresence(doudou).isAvailable());
 			model.addAttribute("tag",binded);
 			model.addAttribute("content", "inc/nab_display.jsp");
 			

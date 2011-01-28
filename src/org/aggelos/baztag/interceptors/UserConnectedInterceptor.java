@@ -37,9 +37,12 @@ public class UserConnectedInterceptor extends HandlerInterceptorAdapter{
 			 */
 			HttpSession curSession = request.getSession();
 			if(curSession.getAttribute("nabaztagList")==null) {
-				curSession.setAttribute("nabaztagList", tagDao.list(currentUser));
 				curSession.setAttribute("ztampList", ztampDao.list(currentUser));
 			}
+			if(curSession.getAttribute("ztampList")==null) {
+				curSession.setAttribute("ztampList", ztampDao.list(currentUser));
+			}
+
 		}
 		/*
 		 * In any case, we are not going to interrupt the user with this
