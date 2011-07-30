@@ -5,8 +5,6 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
-import org.aggelos.baztag.api.Nabaztag;
-
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.Text;
@@ -21,13 +19,6 @@ import com.google.appengine.api.users.User;
  */
 @PersistenceCapable
 public class PNabaztag {
-
-	/*
-	 * It is to be noted that to be used outside of the violet servers, the nabaztag needs to be identified
-	 * by it serial number and a token
-	 */
-	@Persistent
-	private String serialNumber;
 	
 	private String roger;
 	
@@ -54,18 +45,6 @@ public class PNabaztag {
     @Persistent
     private User owner;
     
-    
-    private Nabaztag bindedNabaztag;
-
-
-	public String getSerialNumber() {
-		return serialNumber;
-	}
-
-
-	public void setSerialNumber(String serialNumber) {
-		this.serialNumber = serialNumber;
-	}
 
 
 	public String getToken() {
@@ -132,47 +111,17 @@ public class PNabaztag {
 	}
 
 
-	public Nabaztag getBindedNabaztag() {
-		return bindedNabaztag;
-	}
-
-
-	public void setBindedNabaztag(Nabaztag bindedNabaztag) {
-		this.bindedNabaztag = bindedNabaztag;
-	}
     
-    
-	@Override
-	public String toString() {
-		return serialNumber+" - "+token;
-	}
 	/**
 	 * This will generate a Nabaztag that can be used to interact with the API
 	 * @return
-	 */
+	 /
 	public Nabaztag generateBindedNabaztag() {
 		Nabaztag nab = new Nabaztag(serialNumber, token);
 		this.bindedNabaztag = nab;
 		return nab;
-	}
+	}*/
 	
-	
-	/**
-	 * Merges the Nabaztag values from the API in the current {@link PNabaztag}
-	 * @param tag
-	 */
-	public void merge(Nabaztag tag) {
-		this.name = tag.getName();
-		setSignature(tag.getSignature());
-		switch (tag.getVersion()) {
-		case V1:
-			this.version = 1;
-			break;
-		case V2:
-			this.version = 2;
-			break;
-		}
 		
-	}
 	
 }

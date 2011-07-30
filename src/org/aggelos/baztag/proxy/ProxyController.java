@@ -5,20 +5,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.aggelos.baztag.api.Nabaztag;
-import org.aggelos.baztag.api.NabaztagInstructionSequence;
-import org.aggelos.baztag.api.SimpleNabaztag;
-import org.aggelos.baztag.api.inst.TextInstruction;
-import org.aggelos.baztag.app.Application;
 import org.aggelos.baztag.app.ApplicationBinder;
 import org.aggelos.baztag.app.ZTampApplicationConfig;
 import org.aggelos.baztag.dao.NabaztagDao;
@@ -27,18 +19,14 @@ import org.aggelos.baztag.dao.ZtampDao;
 import org.aggelos.baztag.model.PNabaztag;
 import org.aggelos.baztag.model.Ztamp;
 import org.aggelos.baztag.model.notif.NewStampNotification;
-import org.apache.jasper.tagplugins.jstl.core.Url;
-import org.apache.tools.ant.types.resources.comparators.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.appengine.api.users.User;
-import com.google.appengine.api.users.UserServiceFactory;
 
 /**
  * The purpose of this class is to emulate the violet server
@@ -54,14 +42,12 @@ public class ProxyController {
 	@Autowired
 	private NabaztagDao tagDao;
 	
-	@Autowired
-	private ZtampDao tampDao;
 	
-	@Autowired
+	/*@Autowired
 	private NotificationsDao notificationsDao;
 	
 	@Autowired
-	private ApplicationBinder binder;
+	private ApplicationBinder binder;*/
 	
 	// TODO : find why this (bootcode providing) does not work locally
 	/**
@@ -109,8 +95,8 @@ public class ProxyController {
 		 resp.setContentType("text/plain");
 		    try {
 				resp.getWriter().println("ping mybaztagservices.appspot.com");            
-				resp.getWriter().println("broad broad.violet.net");            
-				resp.getWriter().println("xmpp_domain xmpp.nabaztag.com");
+				resp.getWriter().println("broad mybaztagservices.appspot.com");            
+				resp.getWriter().println("xmpp_domain mybaztagservices.appspotchat.com");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -132,7 +118,7 @@ public class ProxyController {
 		 * that a new stamp has been found and not parametered
 		 * 
 		 */
-		Ztamp chip = tampDao.findByRfId(t);
+		/*Ztamp chip = tampDao.findByRfId(t);
 		PNabaztag associatedTag = tagDao.getBySerialNumber(sn);
 		
 		if(chip==null) {
@@ -150,6 +136,7 @@ public class ProxyController {
 			}
 		}
 		
+		return "";*/
 		return "";
 	}
 }

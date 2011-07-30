@@ -4,8 +4,6 @@ import java.util.logging.Logger;
 
 import javax.servlet.http.HttpSession;
 
-import org.aggelos.baztag.api.Nabaztag;
-import org.aggelos.baztag.api.xml.ApiAnswer;
 import org.aggelos.baztag.dao.NabaztagDao;
 import org.aggelos.baztag.exception.DaoException;
 import org.aggelos.baztag.model.PNabaztag;
@@ -59,17 +57,6 @@ public class NabaztagController {
 		
 		//The Api will test the Nabaztag
 		
-		Nabaztag tag = ptag.generateBindedNabaztag();
-		if(!tag.updateStatus()) {
-			String errors = "";
-			for(ApiAnswer answer : tag.getLastErrors()) {
-				errors += "<br/>"+answer.getMessage();
-			}
-			model.addAttribute("errorMsg", "oooooh... Ce nabaztag n'a pas pu �tre reconnu par les serveurs de Violet par ce que : "+errors);
-			return "redirect:/nabaztag/add";
-		}
-		
-		ptag.merge(tag);
 		dao.save(ptag);
 		session.setAttribute("currentTag", ptag);
 		// force rebuild list
@@ -79,7 +66,6 @@ public class NabaztagController {
 	@RequestMapping("info/{value}")
 	public String displayNabaztag(HttpSession session, Model model, @PathVariable String value) {
 		if("current".equals(value)) {
-			model.addAttribute("tag", ((PNabaztag)session.getAttribute("currentTag")).getBindedNabaztag());
 			model.addAttribute("ptag", session.getAttribute("currentTag"));
 			model.addAttribute("content", "inc/nab_display.jsp");
 		}
@@ -88,25 +74,14 @@ public class NabaztagController {
 			PNabaztag tag = dao.getNabaztagById(value);
 			model.addAttribute("ptag", tag);
 			session.setAttribute("currentTag", tag);
-			Nabaztag binded = tag.generateBindedNabaztag();
-			binded.updateStatus();
-			XMPPService xmpp = XMPPServiceFactory.getXMPPService();
-			JID doudou = new JID("002185BA756A".toLowerCase()+"@xmpp.nabaztag.com");
-			Message msg = new MessageBuilder()
-            .withRecipientJids(doudou)
-            .withBody("test")
-            .build();
-			LOGGER.info(msg.toString());
-                
+	            
         boolean messageSent = false;
-        if (xmpp.getPresence(doudou).isAvailable()) {
+        /*if (xmpp.getPresence(doudou).isAvailable()) {
             SendResponse status = xmpp.sendMessage(msg);
             messageSent = (status.getStatusMap().get(doudou) == SendResponse.Status.SUCCESS);
-        }
+        }*/
 
-			
-			model.addAttribute("isOnline", xmpp.getPresence(doudou).isAvailable());
-			model.addAttribute("tag",binded);
+        	model.addAttribute("ptag", session.getAttribute("currentTag"));
 			model.addAttribute("content", "inc/nab_display.jsp");
 			
 			
@@ -163,7 +138,7 @@ public class NabaztagController {
 	
 	@RequestMapping("changeState")
 	public String wakeUp(HttpSession session, Model model) {
-		PNabaztag tag = (PNabaztag) session.getAttribute("currentTag");
+		/*PNabaztag tag = (PNabaztag) session.getAttribute("currentTag");
 		if(tag==null) {
 			model.addAttribute("errorMsg", "aaah ! je ne sais pas de quel Nabaztag on parle !");
 			return "redirect:/";
@@ -172,7 +147,7 @@ public class NabaztagController {
 		if(!binded.setAwake(!binded.isAwake())) {
 			model.addAttribute("errorMsg", binded.getLastErrors().get(0).getMessage());
 			return "redirect:/";
-		}
+		}*/
 		
 		return "forward:/nabaztag/info/current";
 	}

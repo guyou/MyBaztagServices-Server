@@ -9,6 +9,8 @@
 
 		
 	
+	<bean id="nabaztagDao" class="org.aggelos.baztag.dao.NabaztagDao"/>
+	<bean id="pmf" class="org.aggelos.baztag.dao.PersistenceManagerFactoryPurveyor"/>
 
 	<context:component-scan base-package="org.aggelos.baztag.proxy" />
 	<context:annotation-config />

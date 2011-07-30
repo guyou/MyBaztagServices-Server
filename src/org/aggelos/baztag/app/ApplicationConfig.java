@@ -7,9 +7,6 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
-import org.aggelos.baztag.api.NabaztagInstructionSequence;
-import org.aggelos.baztag.api.inst.TextInstruction;
-import org.aggelos.baztag.api.inst.VoiceInstruction;
 import org.aggelos.baztag.model.PNabaztag;
 
 import com.google.appengine.api.datastore.Key;
@@ -41,12 +38,12 @@ public abstract class ApplicationConfig {
 	public abstract String getApplicationIdentifier();
 	
 	public void say(String text) {
-		NabaztagInstructionSequence seq = new NabaztagInstructionSequence();
+		/*NabaztagInstructionSequence seq = new NabaztagInstructionSequence();
 		VoiceInstruction vi = new VoiceInstruction(voice);
 		TextInstruction ti = new TextInstruction(text);
 		seq.add(ti);
 		seq.add(vi);
-		nabaztag.getBindedNabaztag().execute(seq);
+		nabaztag.getBindedNabaztag().execute(seq);*/
 	}
 
 	public PNabaztag getNabaztag() {

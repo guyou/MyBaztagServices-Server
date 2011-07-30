@@ -9,7 +9,9 @@
 	</system-properties>
 
 	<inbound-services>
-		<service>xmpp_message</service>
+		 <service>xmpp_message</service>
+   		 <service>xmpp_presence</service>
+   		 <service>xmpp_subscribe</service>
 	</inbound-services>
 	
 	<resource-files>

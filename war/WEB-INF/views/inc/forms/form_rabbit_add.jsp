@@ -13,13 +13,10 @@
 <div class="entry">
 	<form:form commandName="api" action="/nabaztag/add" method="post">
 	<fieldset>
-		<h2>SN </h2>
+		<h2>Serial Number (MAC) </h2>
 		<form:input path="serialNumber"/>
 		<p class="byline"><small>Se trouve sous le lapin</small></p>
 		
-		<h2>Token </h2>
-		<form:input path="token"/>
-		<p class="byline"><small>Se trouve sur le site de violet</small></p>
 		<input type="submit" id="x" value="Ajouter" />
 	</form:form>
 	

@@ -14,26 +14,10 @@
 <link rel="stylesheet" type="text/css" href="/resources/style.css" media="screen" />
 </head>
 <body>
-<%
-    UserService userService = UserServiceFactory.getUserService();
-    User user = userService.getCurrentUser();
-%>
 <div id="header">
 	<div id="logo">
 		<h1><a href="/">My Baztag Services</a></h1>
-		<% if(user == null) {
-			%>
-		<p>Qui êtes vous ? <a href="<%= userService.createLoginURL("/") %>">
-		 connectez vous ! 
-		 </a>
-		 </p>
-		<%
-		}
-		else {
-		
-		%>
-		<p>Bonjour, <%= user.getNickname() %>, tu veux peut-être <a href="<%= userService.createLogoutURL("/") %>">te déconnecter ?</a></p>
-		<%}%>
+
 	</div>
 	<!-- end #logo -->
 	<div id="menu">
@@ -48,20 +32,9 @@
 <!-- end #header -->
 <div id="page">
 	
-	<div id="content">
-	<jsp:include page="${content}" />
+<div id="content">
+	<jsp:include page="/WEB-INF/views/inc/about.jsp" />
 	</div>
-	<!-- end #content -->
-	<%if(user!=null) {
-		%>
-		<jsp:include page="/WEB-INF/views/inc/sidebar/connected.jsp" />
-	<% }
-	else {%>
-		<jsp:include page="/WEB-INF/views/inc/sidebar/disconnected.jsp" />
-	<% }%>
-	
-	
-	<!-- end #sidebar -->
 </div>
 <!-- end #page -->
 <div id="footer">
