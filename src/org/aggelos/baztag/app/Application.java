@@ -42,12 +42,6 @@ public interface Application {
 	void doYourStuff(ApplicationConfig config, PNabaztag ptag);
 	
 	
-	/**
-	 * Main call for a Ztamp application
-	 * @param config
-	 * @param ptag
-	 */
-	void doYourStuff(ZTampApplicationConfig config, PNabaztag ptag);
 	
 	/**
 	 * Each app is responsible for creating

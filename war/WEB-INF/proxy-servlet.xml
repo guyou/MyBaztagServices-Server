@@ -8,9 +8,13 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
 		
+<<<<<<< HEAD
 	
 	<bean id="nabaztagDao" class="org.aggelos.baztag.dao.NabaztagDao"/>
 	<bean id="pmf" class="org.aggelos.baztag.dao.PersistenceManagerFactoryPurveyor"/>
+=======
+	<import resource="beans.xml"/>
+>>>>>>> 538dbd92a8eba9d9389fe537ff49c5fb8971d036
 
 	<context:component-scan base-package="org.aggelos.baztag.proxy" />
 	<context:annotation-config />

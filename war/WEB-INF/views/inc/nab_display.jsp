@@ -6,9 +6,8 @@
 <h1 class="title"><c:out value="${tag.name}" /></h1>
 <div class="entry">
 	<p>${tag.signature}</p>
-	${tag.awake }
-	<c:if test="${tag.isAwake}" >Ah, il est réveillé. <a href="/nabaztag/changeState">Lui dire de dormir ?</a></c:if>
-	<c:if test="${not tag.isAwake}" >Ah, il dort ! <a href="/nabaztag/changeState">Le révéiller ?</a></c:if>
+	<c:if test="${tag.awake}" >Ah, il est réveillé. <a href="/nabaztag/changeState">Lui dire de dormir ?</a></c:if>
+	<c:if test="${not tag.awake}" >Ah, il dort ! <a href="/nabaztag/changeState">Le révéiller ?</a></c:if>
 	
 </div>
 <div class="meta">

@@ -74,6 +74,7 @@ public class NabaztagController {
 			PNabaztag tag = dao.getNabaztagById(value);
 			model.addAttribute("ptag", tag);
 			session.setAttribute("currentTag", tag);
+<<<<<<< HEAD
 	            
         boolean messageSent = false;
         /*if (xmpp.getPresence(doudou).isAvailable()) {
@@ -82,6 +83,12 @@ public class NabaztagController {
         }*/
 
         	model.addAttribute("ptag", session.getAttribute("currentTag"));
+=======
+			Nabaztag binded = tag.generateBindedNabaztag();
+			binded.updateStatus();
+			
+			model.addAttribute("tag",binded);
+>>>>>>> 538dbd92a8eba9d9389fe537ff49c5fb8971d036
 			model.addAttribute("content", "inc/nab_display.jsp");
 			
 			

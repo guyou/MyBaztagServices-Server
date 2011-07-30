@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.aggelos.baztag.app.ApplicationBinder;
-import org.aggelos.baztag.app.ZTampApplicationConfig;
+import org.aggelos.baztag.app.ApplicationConfig;
 import org.aggelos.baztag.dao.NabaztagDao;
 import org.aggelos.baztag.dao.NotificationsDao;
 import org.aggelos.baztag.dao.ZtampDao;
@@ -121,16 +121,18 @@ public class ProxyController {
 		/*Ztamp chip = tampDao.findByRfId(t);
 		PNabaztag associatedTag = tagDao.getBySerialNumber(sn);
 		
+		
+		
 		if(chip==null) {
 			chip = new Ztamp();
 			User owner = associatedTag.getOwner();
-			chip.setHashCode(t);
+			chip.setSerialNumber(t);
 			chip.setOwner(owner);
 			tampDao.save(chip);
 			notificationsDao.save(new NewStampNotification(owner,associatedTag,chip));
 		}
 		else {
-			for(ZTampApplicationConfig conf:tampDao.getAppConfigs(chip)) {
+			for(ApplicationConfig conf:tampDao.getAppConfigs(chip)) {
 				binder.forName(conf.getApplicationIdentifier()).doYourStuff(conf, associatedTag);
 				
 			}

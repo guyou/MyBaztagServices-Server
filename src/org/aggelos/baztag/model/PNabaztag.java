@@ -18,15 +18,22 @@ import com.google.appengine.api.users.User;
  *
  */
 @PersistenceCapable
+<<<<<<< HEAD
 public class PNabaztag {
 	
 	private String roger;
+=======
+public class PNabaztag extends Thing{
+
+	/*
+	 * It is to be noted that to be used outside of the violet servers, the nabaztag needs to be identified
+	 * by it serial number and a token
+	 */
+>>>>>>> 538dbd92a8eba9d9389fe537ff49c5fb8971d036
 	
 	@Persistent
 	private String token;
 	
-	@Persistent
-	private String name;
 	
 	@Persistent
 	private Text signature;
@@ -38,13 +45,17 @@ public class PNabaztag {
 	 * Yes, it's true we could use the SN as a key. I'm not even sure I want it to be unique (to share a rabbit through a family)
 	 */
 	
-	@PrimaryKey
-    @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-    private Key key;
-
-    @Persistent
-    private User owner;
+	
     
+    
+<<<<<<< HEAD
+=======
+    
+    private Nabaztag bindedNabaztag;
+
+
+	
+>>>>>>> 538dbd92a8eba9d9389fe537ff49c5fb8971d036
 
 
 	public String getToken() {
@@ -57,14 +68,7 @@ public class PNabaztag {
 	}
 
 
-	public String getName() {
-		return name;
-	}
-
-
-	public void setName(String name) {
-		this.name = name;
-	}
+	
 
 
 	public String getSignature() {
@@ -87,29 +91,7 @@ public class PNabaztag {
 	}
 
 
-	public Key getKey() {
-		return key;
-	}
 	
-	public String getKeyAsString() {
-		return KeyFactory.keyToString(key);
-	}
-
-
-	public void setKey(Key key) {
-		this.key = key;
-	}
-
-
-	public User getOwner() {
-		return owner;
-	}
-
-
-	public void setOwner(User author) {
-		this.owner = author;
-	}
-
 
     
 	/**
